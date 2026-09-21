@@ -7,7 +7,7 @@ synthetic ciphertexts for tests and benchmarks.
 import random
 
 from .alphabet import ALPHABET
-from .ngrams import sort_dict, ngram_frequency
+from .ngrams import ngram_frequency, sort_dict
 
 
 def decipher(message: str, decipher_dict: dict[str, str]) -> str:

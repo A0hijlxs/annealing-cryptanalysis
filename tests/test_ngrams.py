@@ -1,7 +1,7 @@
 import pytest
 
 from codebreak import ngram_frequency, sort_dict
-from codebreak.ngrams import NgramScorer, UNSEEN_NGRAM_SCORE
+from codebreak.ngrams import UNSEEN_NGRAM_SCORE, NgramScorer
 
 
 def test_sort_dict_orders_by_value_descending():

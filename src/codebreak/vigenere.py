@@ -50,7 +50,9 @@ def index_of_coincidence(text: str) -> float:
     return sum(c * (c - 1) for c in counts.values()) / (n * (n - 1))
 
 
-def estimate_key_length(ciphertext: str, max_len: int = 20, english_ic: float = ENGLISH_IC) -> tuple[list[float], int]:
+def estimate_key_length(
+    ciphertext: str, max_len: int = 20, english_ic: float = ENGLISH_IC
+) -> tuple[list[float], int]:
     """Index of coincidence for each candidate key length 1..max_len, and the
     length whose IC is closest to plain English."""
     ics = []

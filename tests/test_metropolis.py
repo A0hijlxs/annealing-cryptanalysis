@@ -2,8 +2,8 @@ import random
 
 from codebreak import (
     NgramScorer,
-    get_text,
     clean_text,
+    get_text,
     metropolis_algorithm,
     random_substitution_key,
     substitution_encipher,
