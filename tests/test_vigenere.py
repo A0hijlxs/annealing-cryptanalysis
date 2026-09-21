@@ -38,15 +38,12 @@ def test_index_of_coincidence_english_text_higher_than_short_period_rotation(eng
 
 
 def test_estimate_key_length_scores_the_true_length_as_well_as_its_pick(english_corpus):
-    # The closest-average-IC heuristic genuinely can't distinguish a key
-    # length from its harmonics: a multiple of the true period produces
-    # (near-)identical column statistics, so `best_length` sometimes comes
-    # back as 14 instead of 7 purely from float noise in a near-exact tie
-    # (confirmed empirically - this holds even on a 1.7M-character corpus,
-    # it is not a small-sample artifact). So rather than assert exact
-    # recovery here, we assert the true length scores essentially as well
-    # as whichever length was picked. The realistic success rate is
-    # quantified properly in benchmarks/bench_vigenere.py.
+    # The closest-average-IC heuristic cannot distinguish a key length from
+    # its harmonics: a multiple of the true period produces near-identical
+    # column statistics, so `best_length` can land on a harmonic (e.g. 14
+    # instead of 7) from a near-exact tie. This checks that the true length
+    # scores as well as whichever length was picked, rather than requiring
+    # exact recovery.
     plaintext = english_corpus[:100_000]
     key = "VIGENER"
     cipher = vigenere_encipher(plaintext, key)
@@ -58,12 +55,10 @@ def test_estimate_key_length_scores_the_true_length_as_well_as_its_pick(english_
 
 
 def test_break_vigenere_recovers_the_key(english_corpus):
-    # Regression test for the per-column key-letter recovery: a double
-    # modular offset in an earlier version made this always fail regardless
-    # of ciphertext length. With enough ciphertext per key letter for the
-    # frequency heuristic to be reliable (~3k chars/letter here), it
-    # correctly recovers the key. guess_len is passed explicitly to isolate
-    # this from the separate key-length-estimation limitation covered above.
+    # Per-column key-letter recovery needs enough ciphertext per key letter
+    # for the most-frequent-letter heuristic to be reliable (~3k chars/letter
+    # here). guess_len is passed explicitly since key-length estimation is a
+    # separate, less reliable step (see the test above).
     plaintext = english_corpus[:20_000].replace(" ", "")
     key = "VIGENER"
     cipher = vigenere_encipher(plaintext, key)
