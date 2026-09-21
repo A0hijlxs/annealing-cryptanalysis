@@ -29,3 +29,11 @@ testpaths = ["tests"]
 [tool.pyright]
 include = ["src", "tests"]
 typeCheckingMode = "basic"
+
+[tool.ruff]
+line-length = 110
+
+[tool.ruff.lint.per-file-ignores]
+# marimo notebook cells: a trailing bare expression is the cell's display
+# output (like Jupyter's implicit repr), not dead code.
+"demo.py" = ["B018"]
