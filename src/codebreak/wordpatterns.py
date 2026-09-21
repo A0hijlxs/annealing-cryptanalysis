@@ -97,11 +97,25 @@ class Dictionary:
             mapping.setdefault(letter, set()).update(chars)
         return mapping
 
+    def _reduced_mapping(self, message: str) -> dict[str, set[str]]:
+        return intersect_mappings([self.word_mapping(word) for word in message.split()])
+
+    def reduced_key_space_size(self, message: str) -> int:
+        """Number of decryption keys remaining after word-pattern matching
+        narrows each cipherletter's possible plaintext letters. This is the
+        size `brute_force` would have to enumerate (before excluding
+        combinations that reuse a plaintext letter, which only shrinks it
+        further)."""
+        size = 1
+        for values in self._reduced_mapping(message).values():
+            size *= len(values)
+        return size
+
     def brute_force(self, message: str, tolerance: float = 0.8) -> list[str]:
         """Reduce the key space via word-pattern matching, then brute-force
         the remaining combinations, returning every attempt that reads as
         English above `tolerance`."""
-        maps = intersect_mappings([self.word_mapping(word) for word in message.split()])
+        maps = self._reduced_mapping(message)
         chars = tuple(maps.keys())
         lists = tuple(tuple(values) for values in maps.values())
 

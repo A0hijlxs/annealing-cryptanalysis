@@ -34,8 +34,8 @@ class NgramScorer:
 
     Wraps a small memoisation cache so repeated Metropolis-algorithm swaps
     that revisit the same message don't re-tokenise and re-sum every time.
-    The cache is an instance attribute (not a module global) so scorers for
-    different frequency models don't collide or leak state between tests.
+    The cache is an instance attribute, so multiple scorers built from
+    different frequency models keep independent caches.
     """
 
     def __init__(self, frequencies: dict[str, float]):
@@ -55,3 +55,6 @@ class NgramScorer:
             )
             self._cache[message] = round(total, 4)
         return self._cache[message]
+
+    def clear_cache(self) -> None:
+        self._cache.clear()
