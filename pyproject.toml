@@ -7,6 +7,8 @@ name = "annealing-cryptanalysis"
 version = "0.1.0"
 description = "Statistical cryptanalysis toolkit: substitution, transposition and Vigenere cipher breaking"
 readme = "README.md"
+license = "MIT"
+authors = [{ name = "A0hijlxs" }]
 requires-python = ">=3.11"
 dependencies = [
     "numpy",
