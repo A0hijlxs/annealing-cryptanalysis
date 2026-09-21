@@ -1,6 +1,25 @@
+# Nix / direnv
 .direnv/
-.ipynb_checkpoints/
+
+# Python
 __pycache__/
+*.pyc
 .pytest_cache/
-legacy/
+.ruff_cache/
+.mypy_cache/
 *.egg-info/
+dist/
+build/
+.venv/
+venv/
+.coverage
+htmlcov/
+
+# Jupyter / marimo
+.ipynb_checkpoints/
+__marimo__/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
