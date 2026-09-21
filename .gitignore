@@ -1,0 +1,6 @@
+.direnv/
+.ipynb_checkpoints/
+__pycache__/
+.pytest_cache/
+legacy/
+*.egg-info/
