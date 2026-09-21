@@ -1,5 +1,5 @@
 {
-    description = "annealing-cryptanalysis devshell with Jupyter";
+    description = "annealing-cryptanalysis devshell";
 
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -11,24 +11,20 @@
             let
                 pkgs = import nixpkgs { inherit system; };
                 python = pkgs.python3.withPackages (ps: with ps; [
-                    jupyterlab
                     numpy
-                    pandas
                     matplotlib
-                    pycryptodome
-                    sympy
-                    requests
                     pytest
+                    marimo
                 ]);
             in
                 {
                 devShells.default = pkgs.mkShell {
-                    packages = [ python ];
+                    packages = [ python pkgs.ruff ];
 
                     shellHook = ''
-            export PYTHONPATH="$PWD/src:$PYTHONPATH"
-            echo "codebreak package is on PYTHONPATH (src/)."
-            echo "Run 'pytest' to run the tests, or 'jupyter lab' to start the notebook server."
+                        export PYTHONPATH="$PWD/src:$PYTHONPATH"
+                        echo "codebreak package is on PYTHONPATH (src/)."
+                        echo "Run 'pytest' to run the tests, or 'marimo edit demo.py' to open the demo notebook."
                     '';
                 };
             });
